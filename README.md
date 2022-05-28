@@ -1,8 +1,14 @@
-# database-internals
+# Understanding database-internals.
+The goal of this execrise is to look into internal details of a database engine, 
+understanding how everything works. This will be a mix of code &  theory mostly
+represnts how i tackle the problem of understanding something new to me.
+Once i am happy with progress i will organize findings into an content index to make it 
+easier to search.
+
 
 ### storage
 
-#### Day 1 (Btree search)
+#### Day 1 - 5/28/22 (Btree search)
 
 ```python
 class Node:
