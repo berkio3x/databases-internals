@@ -7,8 +7,6 @@ easier to search.
 
 ### storage
 
-#### Day 1 - 5/28/22 (Btree search)
-
 ```python
 class Node:
     def __init__(self, keys=None, order=3):
