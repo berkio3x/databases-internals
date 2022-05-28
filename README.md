@@ -1,7 +1,6 @@
 # Understanding database-internals.
 The goal of this execrise is to look into internal details of a database engine, 
-understanding how everything works. This will be a mix of code &  theory mostly
-represnts how i tackle the problem of understanding something new to me.
+understanding how everything works. This will be a mix of code &  theory.
 Once i am happy with progress i will organize findings into an content index to make it 
 easier to search.
 
