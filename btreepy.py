@@ -48,14 +48,16 @@ def split(node, v):
     # insert seperator to parent <>
     
 
-def insert(node, v, parent=None):
+def insert(node, v, parent=None, after_split=False):
     print(f"insert({node} , {v}, {parent})")
     # insertion will happen at leaf node always.
 
+
     node_keys = node.keys
 
-    if len(node_keys) == 0:
-        node.keys[0] = v 
+    if len(node_keys) < m-1 and after_split:
+        node.keys.append(v)
+        return
     else:
         idx = 0
         # find leaf node where insertion needs to be done.
@@ -85,7 +87,7 @@ def insert(node, v, parent=None):
         print( seperator, N)
         print(f"new sub root after split -> {N}")
         print(f"{N.children}")
-        insert(parent, v)
+        insert(parent, v, after_split=True)
         parent.children = N.children
 
         # seperator = node_keys[idx - 1]
@@ -116,3 +118,5 @@ n.children = [n1 , n2]
 if __name__ == '__main__':
     # assert (search(n, 5) == n2)
     insert(n, 8)
+    search(n, 8)
+
