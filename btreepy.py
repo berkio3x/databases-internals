@@ -72,6 +72,7 @@ def insert(node, v, parent=None, after_split=False):
     # if we find children , we need to 
     # look into it.
     if node.children:
+        print("--->",node,idx, node.children)
         insert(node.children[idx], v, parent=node)
     else:
         # there is no space left to insert.
@@ -82,20 +83,20 @@ def insert(node, v, parent=None, after_split=False):
         seperator = node_keys[idx - 1]
         print(f"Node split required")
         N = split(node, seperator)
+        # node = 
 
         N.keys = [v]
         print( seperator, N)
         print(f"new sub root after split -> {N}")
         print(f"{N.children}")
         insert(parent, v, after_split=True)
-        parent.children = N.children
 
-        # seperator = node_keys[idx - 1]
-        # n1, n2 = split(node, seperator)
-        # print(f"Node split required")
-        # print( seperator, n1, n2)
-        # insert(parent, seperator)
-
+        # node refers to node that we splitted above,
+        # replace it with splitted node 
+        # TODO : Fix this
+        node = N.children
+        print(f"child {N.children}")
+        
 
 
 n = Node()
@@ -118,5 +119,8 @@ n.children = [n1 , n2]
 if __name__ == '__main__':
     # assert (search(n, 5) == n2)
     insert(n, 8)
-    search(n, 8)
+    print("\n#########\n")
+    insert(n, 10)
+
+    # search(n, 8)
 
