@@ -46,10 +46,11 @@ def split(node, v):
     return c
     # return [n1, n2return c]
     # insert seperator to parent <>
-    
+
+
 
 def insert(node, v, parent=None, after_split=False):
-    print(f"insert({node} , {v}, {parent})")
+    print(f"insert(root={node} , {v}, parent={parent})")
     # insertion will happen at leaf node always.
 
 
@@ -66,13 +67,16 @@ def insert(node, v, parent=None, after_split=False):
             idx += 1
 
     if len(node_keys) < m-1 and len(node.children) == 0:
-        node_keys[idx] = v
+        print(node_keys, idx,"-->")
+        node_keys.append(v)
+        return
 
     # we want to insert only to leaf node.
     # if we find children , we need to 
     # look into it.
     if node.children:
-        print("--->",node,idx, node.children)
+        print(f"Look into children")
+        print(f"children of={node} childidx={idx} children={node.children}")
         insert(node.children[idx], v, parent=node)
     else:
         # there is no space left to insert.
@@ -84,18 +88,18 @@ def insert(node, v, parent=None, after_split=False):
         print(f"Node split required")
         N = split(node, seperator)
         # node = 
+        del parent.children[idx]
+        parent.children.extend(N.children)
 
         N.keys = [v]
         print( seperator, N)
         print(f"new sub root after split -> {N}")
-        print(f"{N.children}")
+        # print(f"{N.children}")
         insert(parent, v, after_split=True)
 
-        # node refers to node that we splitted above,
-        # replace it with splitted node 
-        # TODO : Fix this
-        node = N.children
-        print(f"child {N.children}")
+       
+        print(f"new children={parent.children}")
+        
         
 
 
@@ -122,5 +126,5 @@ if __name__ == '__main__':
     print("\n#########\n")
     insert(n, 10)
 
-    # search(n, 8)
+    # search(n, 11)
 
