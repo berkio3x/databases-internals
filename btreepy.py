@@ -47,7 +47,13 @@ def split(node, v):
     # return [n1, n2return c]
     # insert seperator to parent <>
 
-
+def print_tree(root):
+    print(root)
+    if root.children:
+        cc = ""
+        for  index,c in enumerate(root.children):
+            cc +=  str(c)
+        print(cc)
 
 def insert(node, v, parent=None, after_split=False):
     """
@@ -66,18 +72,18 @@ def insert(node, v, parent=None, after_split=False):
     # if insert request has bubbled up to root , 
     # root node gets split up.
 
-    if parent == None and after_split:
-        '''
-        If the splitting goes all the way up to the root,
-        it creates a new root with a single separator 
-        value and two children,
-        '''
+    # if parent == None and after_split:
+    #     '''
+    #     If the splitting goes all the way up to the root,
+    #     it creates a new root with a single separator 
+    #     value and two children,
+    #     '''
 
-        new_root = split(node, v)
+    #     new_root = split(node, v)
         
-        print(f'root node needs to be split,\n after split {new_root}')
-        print(node, v)
-        return new_root
+    #     print(f'root node needs to be split,\n after split {new_root}')
+    #     print(node, v)
+    #     return new_root
 
     if len(node_keys) < m-1 and after_split:
         node.keys.append(v)
@@ -103,24 +109,46 @@ def insert(node, v, parent=None, after_split=False):
     else:
         # there is no space left to insert.
         # do splitting here.
-        # find median seperator. 
-        # add logic to find correct seperator
+        # find median seperator.
+    
 
-        seperator = node_keys[idx - 1]
-        print(f"Node split required")
+        # To find the proper seperator & process further
+        # we need to create actual node in sorted order & 
+        # then perform split
+        # TODO Fix the code below, just want to confirm implementation,
+        # TODO Fix splitting logic
+        keys = []
+        for i in node_keys:
+            if i < v:
+                keys.append(i)
+        seperator = i
+        keys.append(v)
+        for i in node_keys:
+            if i > v:
+                keys.append(i)
+        
+        print(f'new keys before split={keys}')
+        node.keys = keys
+
+        # seperator = node_keys[idx - 1]
+
+        print(node)
+        print(f"[+] Node split required")
+        # node.keys.append(v)
         N = split(node, seperator)
-        # node = 
+
+
         del parent.children[idx]
         parent.children.extend(N.children)
 
-        N.keys = [v]
-        print( f"seperator={seperator}, new node={N}")
-        print(f"new sub root after split -> {N}")
-        # print(f"{N.children}")
+        N.keys = [seperator]
+        print( f"[+] seperator={seperator}")
+        print(f"[+] children of subroot {N}={N.children}")
+        print(f"[+] new sub root after split -> {N}")
         insert(parent, v, after_split=True)
 
        
-        print(f"new children={parent.children}")
+        print(f"[+] new children={parent.children}")
         
         
 
@@ -148,7 +176,10 @@ if __name__ == '__main__':
     print("\n#########\n")
     insert(n, 10)
     print("\n#-----##\n")
+    print_tree(n)
     nn = insert(n, 11)
+    print_tree(n)
+
     print(nn,"==>")
 
 
