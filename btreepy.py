@@ -28,18 +28,18 @@ def search(root, v):
     return search(child_node, v)
 
 
-def split(node, v):
-    print(f"split({node},{v})")
-    node_keys = node.keys
+def split(keys, v):
+    print(f"split({keys},{v})")
+    
     idx = 0
-    while idx < len(node_keys) and node_keys[idx] < v:
+    while idx < len(keys) and keys[idx] < v:
         idx += 1
 
     c = Node()
     n1 = Node()
     n2 = Node()
-    n1.keys = node_keys[:idx+1]
-    n2.keys = node_keys[idx+1:]
+    n1.keys = keys[:idx+1]
+    n2.keys = keys[idx+1:]
     # c.keys = [v]
     c.children = [n1 , n2]
     
@@ -121,11 +121,14 @@ def insert(node, v, parent=None, after_split=False):
         for i in node_keys:
             if i < v:
                 keys.append(i)
-        seperator = i
+                # seperator = i
         keys.append(v)
-        for i in node_keys:
-            if i > v:
-                keys.append(i)
+        for k in node_keys:
+            if k > v:
+                keys.append(k)
+
+        seperator = keys[len(keys)//2]
+
         
         print(f'new keys before split={keys}')
         node.keys = keys
@@ -135,7 +138,7 @@ def insert(node, v, parent=None, after_split=False):
         print(node)
         print(f"[+] Node split required")
         # node.keys.append(v)
-        N = split(node, seperator)
+        N = split(keys, seperator)
 
 
         del parent.children[idx]
