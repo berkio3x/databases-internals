@@ -50,11 +50,34 @@ def split(node, v):
 
 
 def insert(node, v, parent=None, after_split=False):
+    """
+    Accept the node to which we want to insert, 
+    We keep track of parent in recursive calls in
+    order to track back, 
+    `after_split` parameter indicates if this is a 
+    insert request after a node split has occured.
+    """
     print(f"insert(root={node} , {v}, parent={parent})")
     # insertion will happen at leaf node always.
 
 
     node_keys = node.keys
+
+    # if insert request has bubbled up to root , 
+    # root node gets split up.
+
+    if parent == None and after_split:
+        '''
+        If the splitting goes all the way up to the root,
+        it creates a new root with a single separator 
+        value and two children,
+        '''
+
+        new_root = split(node, v)
+        
+        print(f'root node needs to be split,\n after split {new_root}')
+        print(node, v)
+        return new_root
 
     if len(node_keys) < m-1 and after_split:
         node.keys.append(v)
@@ -62,7 +85,6 @@ def insert(node, v, parent=None, after_split=False):
     else:
         idx = 0
         # find leaf node where insertion needs to be done.
-        # 1 2 3 4 6 5
         while idx < len(node_keys) and node_keys[idx] < v:
             idx += 1
 
@@ -92,7 +114,7 @@ def insert(node, v, parent=None, after_split=False):
         parent.children.extend(N.children)
 
         N.keys = [v]
-        print( seperator, N)
+        print( f"seperator={seperator}, new node={N}")
         print(f"new sub root after split -> {N}")
         # print(f"{N.children}")
         insert(parent, v, after_split=True)
@@ -125,6 +147,10 @@ if __name__ == '__main__':
     insert(n, 8)
     print("\n#########\n")
     insert(n, 10)
+    print("\n#-----##\n")
+    nn = insert(n, 11)
+    print(nn,"==>")
+
 
     # search(n, 11)
 
