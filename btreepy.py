@@ -28,18 +28,18 @@ def search(root, v):
     return search(child_node, v)
 
 
-def split(keys, v):
-    print(f"split({keys},{v})")
+def split(keys, seperator_idx):
+    print(f"split({keys},{seperator_idx})")
     
-    idx = 0
-    while idx < len(keys) and keys[idx] < v:
-        idx += 1
+    # idx = 0
+    # while idx < len(keys) and keys[idx] < v:
+    #     idx += 1
 
     c = Node()
     n1 = Node()
     n2 = Node()
-    n1.keys = keys[:idx+1]
-    n2.keys = keys[idx+1:]
+    n1.keys = keys[:seperator_idx]
+    n2.keys = keys[seperator_idx+1:]
     # c.keys = [v]
     c.children = [n1 , n2]
     
@@ -78,11 +78,22 @@ def insert(node, v, parent=None, after_split=False):
     #     it creates a new root with a single separator 
     #     value and two children,
     #     '''
+    #     keys = []
+    #     for i in node_keys:
+    #         if i < v:
+    #             keys.append(i)
+    #             # seperator = i
+    #     keys.append(v)
+    #     for k in node_keys:
+    #         if k > v:
+    #             keys.append(k)
 
-    #     new_root = split(node, v)
+    #     seperator = len(keys)//2
+
+    #     new_root = split(keys, seperator)
         
     #     print(f'root node needs to be split,\n after split {new_root}')
-    #     print(node, v)
+    #     # print(node, v)
     #     return new_root
 
     if len(node_keys) < m-1 and after_split:
@@ -127,7 +138,7 @@ def insert(node, v, parent=None, after_split=False):
             if k > v:
                 keys.append(k)
 
-        seperator = keys[len(keys)//2]
+        seperator = len(keys)//2
 
         
         print(f'new keys before split={keys}')
@@ -144,11 +155,12 @@ def insert(node, v, parent=None, after_split=False):
         del parent.children[idx]
         parent.children.extend(N.children)
 
-        N.keys = [seperator]
-        print( f"[+] seperator={seperator}")
+        seperator_key = keys[seperator]
+        N.keys = [seperator_key]
+        print( f"[+] seperator index={seperator}")
         print(f"[+] children of subroot {N}={N.children}")
         print(f"[+] new sub root after split -> {N}")
-        insert(parent, v, after_split=True)
+        insert(parent, seperator_key, after_split=True)
 
        
         print(f"[+] new children={parent.children}")
