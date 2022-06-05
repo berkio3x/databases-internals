@@ -43,7 +43,12 @@ def split(node, v):
         if k > v:
             keys.append(k)
 
-    seperator_idx = len(keys)//2
+    seperator_idx = len(keys)//2 
+    # for idx, i  in enumerate(keys):
+    #     if i < v:
+
+    print(keys, seperator_idx,"+++")
+
 
     c = Node()
     n1 = Node()
@@ -54,7 +59,7 @@ def split(node, v):
     
     return {
         'new_root':c, 
-        'seperator_key':node.keys[seperator_idx]
+        'seperator_key':keys[seperator_idx]
     }
     # return [n1, n2return c]
     # insert seperator to parent <>
@@ -84,12 +89,15 @@ def insert(node, v, parent=None, after_split=False):
     # if insert request has bubbled up to root , 
     # root node gets split up.
 
-    # if parent == None and after_split:
-    #     '''
-    #     If the splitting goes all the way up to the root,
-    #     it creates a new root with a single separator 
-    #     value and two children,
-    #     '''
+    if parent == None and after_split:
+        '''
+        If the splitting goes all the way up to the root,
+        it creates a new root with a single separator 
+        value and two children,
+        '''
+        # splitted_root = split(node, v)
+        pass 
+        #TODO
 
 
     if len(node_keys) < m-1 and after_split:
@@ -122,20 +130,6 @@ def insert(node, v, parent=None, after_split=False):
         # To find the proper seperator & process further
         # we need to create actual node in sorted order & 
         # then perform split
-        # TODO Fix the code below, just want to confirm implementation,
-        # TODO Fix splitting logic
-        # keys = []
-        # for i in node_keys:
-        #     if i < v:
-        #         keys.append(i)
-        #         # seperator = i
-        # keys.append(v)
-        # for k in node_keys:
-        #     if k > v:
-        #         keys.append(k)
-
-        # seperator = len(keys)//2
-
         
         print(f'new keys before split={node}')
         # node.keys = keys
@@ -146,6 +140,7 @@ def insert(node, v, parent=None, after_split=False):
         print(f"[+] Node split required")
         # node.keys.append(v)
         splitted_node = split(node, v)
+        print(f'[+] splitted_node={splitted_node}')
         N = splitted_node['new_root']
         seperator_key= splitted_node['seperator_key']
 
