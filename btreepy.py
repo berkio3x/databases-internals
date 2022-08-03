@@ -89,15 +89,31 @@ def insert(node, v, parent=None, after_split=False):
     # if insert request has bubbled up to root , 
     # root node gets split up.
 
-    if parent == None and after_split:
+    if parent == None and after_split and len(node_keys) == m-1:
         '''
         If the splitting goes all the way up to the root,
         it creates a new root with a single separator 
         value and two children,
         '''
-        # splitted_root = split(node, v)
-        pass 
-        #TODO
+        pass
+        print(f'[-] splitting root node')
+        splitted_root = split(node, v)
+        print(f'[+] splitted root={splitted_root}')
+        N = splitted_root['new_root']
+        seperator_key= splitted_root['seperator_key']
+
+        nn = Node()
+        root = nn
+
+        # del parent.children[idx]
+        nn.children.extend(N.children)
+
+        # seperator_key = keys[seperator]
+        N.keys = [seperator_key]
+        print( f"[+] seperator ={seperator_key}")
+        print(f"[+] children of subroot {N}={N.children}")
+        print(f"[+] new sub root after split -> {N}")
+        return
 
 
     if len(node_keys) < m-1 and after_split:
@@ -175,20 +191,24 @@ n2.children= []
 n2.is_leaf = True
 
 n.children = [n1 , n2]
-
+root = n
 
 if __name__ == '__main__':
     # assert (search(n, 5) == n2)
-    insert(n, 8)
-    print_tree(n)
-    print("\n#########\n")
-    insert(n, 10)
-    print("\n#-----##\n")
-    print_tree(n)
-    nn = insert(n, 11)
-    print_tree(n)
+    for i in range(10000):
+        insert(n,i)
+    print(10)
+    # print_tree(root)
+    # insert(n, 8)
+    # print_tree(n)
+    # print("\n#########\n")
+    # insert(n, 10)
+    # print("\n#-----##\n")
+    # print_tree(n)
+    # nn = insert(n, 11)
+    # print_tree(n)
 
-    print(nn,"==>")
+    # print(nn,"==>")
 
 
     # search(n, 11)
